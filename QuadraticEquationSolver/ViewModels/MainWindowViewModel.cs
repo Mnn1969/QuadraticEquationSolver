@@ -23,5 +23,7 @@ namespace QuadraticEquationSolver.ViewModels
         public int TitleLength => Title.Length;
 
         #endregion
+
+        public string? UserName {  get => Get<string>(); set => Set(value); }
     }
 }

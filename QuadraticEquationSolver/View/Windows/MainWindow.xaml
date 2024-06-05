@@ -12,8 +12,8 @@
     </Window.DataContext>
     <Grid>
         <StackPanel Margin="20">
-            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="{Binding TitleLength, StringFormat=Длина заголовка {0} символа}"/>
+            <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="{Binding UserName, StringFormat=Имя пользователя  {0}}"/>
         </StackPanel>
 
     </Grid>

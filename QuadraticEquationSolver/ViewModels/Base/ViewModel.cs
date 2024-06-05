@@ -20,5 +20,20 @@ namespace QuadraticEquationSolver.ViewModels.Base
             OnPropertyChanged(PropertyName);
             return true;
         }
+
+        private readonly Dictionary<string, object> _Values = new();
+
+        protected T? Get<T>([CallerMemberName] string PropertyName = null!) =>
+            _Values.TryGetValue(PropertyName, out var value) ? (T?)value! : default;
+
+        protected bool Set<T>(T value, [CallerMemberName] string PropertyName = null!)
+        {
+            if (_Values.TryGetValue(PropertyName, out var old_value) && Equals(value, old_value)) 
+                return false;
+
+            _Values[PropertyName] = value!;
+            OnPropertyChanged(PropertyName);
+            return true;
+        }
     }
 }
