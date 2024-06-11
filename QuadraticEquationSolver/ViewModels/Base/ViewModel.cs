@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace QuadraticEquationSolver.ViewModels.Base
 {
-    class ViewModel : INotifyPropertyChanged
+    internal abstract partial class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -18,6 +18,47 @@ namespace QuadraticEquationSolver.ViewModels.Base
 
             field = value;
             OnPropertyChanged(PropertyName);
+            return true;
+        }      
+        
+
+        protected virtual bool Set<T>(ref T field, T value, Func<T, bool> Validator, 
+            [CallerMemberName] string PropertyName = null!)
+        {
+            if (Equals(field, value) || !Validator(value)) return false;
+
+            field = value; 
+            OnPropertyChanged(PropertyName);
+            return true;
+        }
+
+        protected virtual bool Set<T>(
+            ref T field,
+            T value,
+            string? ValidationErrorMessage,
+            Func<T, bool> Validator,
+            [CallerMemberName] string PropertyName = null!)
+        {
+            if (Equals(field, value))
+                return false;
+
+            if (!Validator(value))
+                throw new ArgumentException(
+                    ValidationErrorMessage ?? $"Ошибка валидации данных свойства {PropertyName}",
+                    nameof(value));
+
+            field = value;
+            OnPropertyChanged(PropertyName);
+            return true;
+        }
+
+        protected virtual bool Set<T>(T value, T OldValue, Action<T> Setter, 
+            [CallerMemberName] string PropertyName = null!)
+        {
+            if (Equals(value, OldValue)) return false;
+
+            Setter(value);
+            OnPropertyChanged();
             return true;
         }
 
