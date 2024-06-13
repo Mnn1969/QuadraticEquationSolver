@@ -40,6 +40,12 @@
                 <TextBlock Text="{Binding X2, StringFormat='X2 = {0}', FallbackValue=[--]}"/>
             </UniformGrid>            
         </StackPanel>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Right"
+                Content="Показать дочернее окно" Margin="5" Padding="10,5"
+                Command="{Binding ShowChildWindowCommand}"/>
+
+        <TextBox VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5"
+                 Width="120" Text="{Binding StringValue, UpdateSourceTrigger=PropertyChanged}"/>
 
     </Grid>
 </Window>
